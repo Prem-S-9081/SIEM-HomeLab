@@ -1,4 +1,5 @@
 **SIEM HOME LAB – PREM PERSONAL NETWORK**
+
 I have assembled a home lab using a Kali virtual machine and Elastic SIEM. I used the Elastic Beats agent to transfer data from the Kali virtual machine to the SIEM; Nmap was used to generate security events on the Kali VM; and the Elastic web interface was used to query and analyze the logs in the SIEM. In order to detect security incidents, I also designed an alert and a dashboard to visualize security occurrences.
 Using the help of this home lab, I can acquire and hone the skills required for efficient security monitoring and incident response using Elastic SIEM. By following these steps, I can enhance my security monitoring abilities and obtain practical experience with utilizing a SIEM, which will help me become a great security analyst or engineer.	
 
@@ -41,8 +42,9 @@ To set up the agent to collect logs from your Kali VM and forward them to your E
 5.	You can verify that the agent has been installed correctly by running this command: 
 sudo systemctl status elastic-agent.service
 Note: Before continuing, make sure your Kali is online by pinging google.com if you receive a problem when installing the agent.
-![image](https://github.com/user-attachments/assets/bd787d52-1502-4505-8ae2-04cbc2b9af60)
-![image](https://github.com/user-attachments/assets/73301d79-ec26-47f9-bcdc-bff641d11cae)
+ ![image](https://github.com/user-attachments/assets/bd787d52-1502-4505-8ae2-04cbc2b9af60)
+ ![image](https://github.com/user-attachments/assets/3ac5df2b-4883-474d-9c68-a20dfa5cfce8)
+
 
 **Task 4: Generating Security Events on the Kali VM**
 You can create some security-related events on your Kali virtual machine (VM) to confirm that the agent is operating as intended. We can use a tool like Nmap and Wireshark to accomplish this. A free and open-source tool for network administration, exploration, and security auditing is called Nmap (Network Mapper). Its purpose is to identify hosts and services on a computer network, generating a network "map" in the process. Nmap may be used to find out what operating system and software are installed on a target system, check hosts for open ports, and obtain further network information. Wireshark is a free and open-source packet analyzer. It is used for network troubleshooting, analysis, software and communications protocol development, and education.
@@ -50,7 +52,8 @@ To run an Nmap scan, follow these steps:
 1.	Install Nmap on the Linux VM if you’re not using Kali, Nmap already comes preinstalled in Kali. Open a new Terminal and run this command to install it: sudo apt-get install nmap.
 2.	Run a scan on Kali machine by running the command: sudo nmap <vm-ip>. You can also run a scan of your host machine if you place your Kali VM on a “bridged” network.
 3.	This scan generates several security events, such as the detection of open ports and the identification of services running on those ports. Run a few more Nmap scans (“nmap -sS <ip address>”, “nmap -sT <ip address>”, “nmap -p- <ip address>”etc..
- 
+ ![image](https://github.com/user-attachments/assets/78ed7e27-b501-46a0-b139-a4004135ef37)
+
 **Task 5: Querying for Security Events in the Elastic SIEM**
 We can now begin searching through and examining the SIEM's logs after moving data from the Kali VM.
 To do this, follow these steps:
@@ -59,7 +62,11 @@ To do this, follow these steps:
 3.	Click on the “Search” button to execute the search query.
 4.	The results of the search query will be displayed in the table below. You can click on the three dots next to each event to view more details.
 Note: You can learn more about how security incidents are found, looked into, and handled in real-world settings by creating and examining various security event types in Elastic SIEM, such as the one above, or by creating authentication failures caused by a user entering the wrong password or trying to log in to SSH with the wrong password.
-
+ ![image](https://github.com/user-attachments/assets/e2307e1a-b04c-4efa-b82e-cc58284ec084)
+                        NMAP SCAN DATA
+ ![image](https://github.com/user-attachments/assets/8a8d1108-8efa-4e0a-8d8b-af1af90aea38)
+                    WIRESHARK SCAN DATA
+  	
 **Task 6: Create a Dashboard to Visualize the Events**
 You can also use the visualizations and dashboards in the SIEM app to analyze the logs and identify patterns or anomalies in the data.
 Here’s how you can do that:
@@ -70,6 +77,7 @@ Here’s how you can do that:
 5.	Choose the visualization kind you desire, either "Area" or "Line." A chart displaying the number of incidents over time will be produced as a result.
 6.	Choose "Timestamp" for the horizontal field and "Count" for the vertical field type in the "Metrics" section of the visualization editor on the right. This will display the number of occurrences over time.
 7.	Click on the “Save” button to save the visualization and then complete the rest of the settings.
+ ![image](https://github.com/user-attachments/assets/945c836e-8c24-4e61-aca3-5ef5e0a63120)
  
 **Task 7: Create an Alert**
 Alerts are an essential component of a SIEM that help identify security events and quickly address them. Alerts can be set up to perform particular actions when predetermined criteria are fulfilled, and they can be generated using established rules or bespoke queries. 
@@ -84,17 +92,28 @@ Here are the steps:
 8.	Choose the action you wish to perform when the rule is activated from the "Actions" section. You have the option to start a custom webhook, start a Slack chat, or send an email notification.
 9.	Finally, click the “Create and enable rule” button to create the alert.
 Note: After creating the alert, it will keep an eye out for Nmap scan events in your logs. The alarm will sound and the chosen action will be carried out if a Nmap scan event is found. Under "Security," go to the "Alerts" section to view and manage your notifications.
- 
+
+ ![image](https://github.com/user-attachments/assets/8a5e4950-611d-4aac-a89b-3e30237a5825)
+ ![image](https://github.com/user-attachments/assets/ccca6c34-5dd7-4aff-9b0f-2241b20fd5df)
+
+
 **Additional Observations :**
+
 •	In order to use Anomaly detection, Data Frame Analytics, Dashboard Management, Data Visualizations, and other features on your deployment, you can also build Machine Learning models.
 
 •	You may locate your rule operating on the specified path and receiving the triggered actions on the main dashboard under the alerts part of the observability section. 
+ ![image](https://github.com/user-attachments/assets/4198c1cc-d7e4-43ac-a28a-2251759c650d)
 
 •	You can filter out specific events from the stream section by using the timestamps and actions completed as a collaborative log found in the discover sections. These logs will be used to create a pictorial representation of the occurrences.
- 
+ ![image](https://github.com/user-attachments/assets/7bf4e73d-df7b-4adc-8ebb-645a1f40808a)
+
 •	Numerous performance data, like CPU Usage, CPU Credits, Number of Inbound Requests, Search Response Time, and so forth, are available on your deployment's Main Page. You will receive a comprehensive analysis of the performance and health of your deployment from these indicators. 
- 
+ ![image](https://github.com/user-attachments/assets/23c51de0-c31e-4544-be58-2f16ff8baa72)
+ ![image](https://github.com/user-attachments/assets/bb4853f0-0b17-4ec8-ae08-d21d6429197c)
+
 •	You can compute your data quality, Kubernetes, entity analytics, and detection and response data using a variety of pre-defined dashboards found under the security area. Additionally, you may design a custom dashboard to track the actions that are triggered by your deployment and conduct technical analysis.
- 
+ ![image](https://github.com/user-attachments/assets/338ad376-f44e-4c6c-a4c6-cd7ba9857138)
+ ![image](https://github.com/user-attachments/assets/f9e0a78d-2100-4d1f-a308-57c3b279058a)
+
  
 
